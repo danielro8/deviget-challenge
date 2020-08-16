@@ -41,8 +41,11 @@ const game = (state = initialState, action) => {
         rows: config.rows,
         cols: config.cols,
         map: [],
+        playedMap: [],
         cellsClicked: 1,
-        win: false
+        win: false,
+        timer: 100,
+        remainedTime: 100
       }
     }
 
@@ -54,14 +57,16 @@ const game = (state = initialState, action) => {
       return Object.assign({}, state, { clear: true })
     }
     case SAVE: {
-      return Object.assign({}, state, { save: true })
+      const {playedMap, remainedTime } = action.payload
+      return Object.assign({}, state, { save: true, playedMap, remainedTime })
     }
     case RESUME: {
       return Object.assign({}, state, { resume: true })
     }
     case START_GAME: {
-      const { bombCount, rows, cols, map } = action.payload
-      return Object.assign({}, state, { bombCount, rows, cols, map, gameStarted: true })
+      console.log('PAYLOAD', action.payload)
+      const { bombCount, rows, cols, map, playedMap } = action.payload
+      return Object.assign({}, state, { bombCount, rows, cols, map, playedMap, gameStarted: true })
     }
     case CELL_CLICK: {
       let { cellsClicked } = action.payload

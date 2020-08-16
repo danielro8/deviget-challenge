@@ -65,8 +65,20 @@ const addOneNestedArrAdjacents = (
 const floorRand = (scale) => {
   return Math.floor(Math.random() * scale);
 }
-export  {
+
+const populatePlayedMap = (rows, cols) => {
+  const map = []
+  for (let i = 0; i < rows; i++) {
+    map[i] = [];
+    for (let j = 0; j < cols; j++) {
+      map[i][j] = {clicked: false, value: ""};
+    }
+  }
+  return map;
+}
+export {
   nestedArray,
   populateNestedArray,
-  valsAdjacentCounts
+  valsAdjacentCounts,
+  populatePlayedMap
 }

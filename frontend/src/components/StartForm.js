@@ -4,7 +4,8 @@ import '../css/StartForm.css'
 import {
     nestedArray,
     populateNestedArray,
-    valsAdjacentCounts
+    valsAdjacentCounts,
+    populatePlayedMap
   } from "../helpers";
 import {start_game} from '../actions';
 import Map from './Map'
@@ -29,7 +30,7 @@ const StartForm = () => {
         await dispatch(start_game({rows: selectedRows, cols: selectedCols, bombCount: selectedBombCount, map: valsAdjacentCounts(
             populateNestedArray(nestedArray(selectedRows, selectedCols), "☀", selectedBombCount),
             "☀"
-          )}))
+          ), playedMap: populatePlayedMap(selectedRows, selectedCols)}))
           setShowMap(true);
        
     }
