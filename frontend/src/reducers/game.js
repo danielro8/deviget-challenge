@@ -5,7 +5,8 @@ import {
   CLEAR,
   RESUME,
   SAVE,
-  GAME_PARAMS
+  START_GAME,
+  CELL_CLICK
 } from '../actions/types'
 import config from '../config'
 
@@ -32,12 +33,15 @@ const game = (state = initialState, action) => {
     case INIT: {
       return {
         gameover: false,
+        gameStarted: false, 
         clear: false,
         resume: false,
         save: false,
         bombCount: config.bombCount,
         rows: config.rows,
-        cols: config.cols
+        cols: config.cols,
+        map: [],
+        cellsClicked: 1
       }
     }
 
@@ -53,9 +57,13 @@ const game = (state = initialState, action) => {
     case RESUME: {
       return Object.assign({}, state, { resume: true })
     }
-    case GAME_PARAMS: {
-      const { bombCount, rows, cols } = action.payload
-      return Object.assign({}, state, { bombCount, rows, cols })
+    case START_GAME: {
+      const { bombCount, rows, cols, map } = action.payload
+      return Object.assign({}, state, { bombCount, rows, cols, map, gameStarted: true })
+    }
+    case CELL_CLICK: {
+      let { cellsClicked } = action.payload
+      return Object.assign({}, state, { cellsClicked: ++cellsClicked })
     }
     default: return state
   }

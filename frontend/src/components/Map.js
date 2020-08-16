@@ -2,22 +2,22 @@
 
 import React from "react";
 import Cell from "./Cell";
-import {
+/*import {
     nestedArray,
     populateNestedArray,
     valsAdjacentCounts
 } from "../helpers";
-
-import { useSelector, useDispatch } from 'react-redux'
+*/
+import { useSelector } from 'react-redux'
 
 
 const Map = () => {
-    const rows = useSelector(state => state.game.rows)
+    /*const rows = useSelector(state => state.game.rows)
     const cols = useSelector(state => state.game.cols)
-    const bombCount = useSelector(state => state.game.bombCount)
+    const bombCount = useSelector(state => state.game.bombCount)*/
     const map = useSelector(state => state.game.map)
-    const cellsClicked = useSelector(state => state.game.cellsClicked)
-  
+    //const cellsClicked = useSelector(state => state.game.cellsClicked)
+    
     return (
         <div>
             <table>

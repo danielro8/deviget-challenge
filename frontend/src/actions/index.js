@@ -5,7 +5,8 @@ import {
   CLEAR,
   RESUME,
   SAVE,
-  GAME_PARAMS
+  START_GAME,
+  CELL_CLICK
 } from './types'
 
 export const toggle = (flagged) => {
@@ -35,6 +36,10 @@ export const resume = () => {
   return { type: RESUME }
 }
 
-export const game_params = (params) => {
-  return { type: GAME_PARAMS, payload: params }
+export const start_game = (params) => {
+  return { type: START_GAME, payload: params }
+}
+
+export const cell_click = (params) => {
+  return { type: CELL_CLICK, payload: params }
 }
