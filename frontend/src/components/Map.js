@@ -19,14 +19,13 @@ const Map = () => {
     //const cellsClicked = useSelector(state => state.game.cellsClicked)
     
     return (
-        <div className="container">
+        <div className="container" style={{overflowX: "auto"}}>
             <table className="map">
                 <tbody>
                     {map.map((item, row) => {
                         return (
                             <tr key={row} className="mapRow">
                                 {item.map((subitem, col) => {
-                                    console.log('SUBITEM', subitem)
                                     return (
                                         <Cell
                                             key={col}

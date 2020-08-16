@@ -19,8 +19,9 @@ const Cell = ({ row, column, value }) => {
     for (let i of rowList) {
       for (let j of colList) {
         setImmediate(() => {
-          if (document.getElementById(`${i}_${j}`))
+          if (document.getElementById(`${i}_${j}`)){
             document.getElementById(`${i}_${j}`).click();
+          }
         });
       }
     }
