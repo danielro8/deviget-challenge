@@ -33,6 +33,8 @@ const game = (state = initialState, action) => {
       return {
         gameover: false,
         clear: false,
+        resume: false,
+        save: false,
         bombCount: config.bombCount,
         rows: config.rows,
         cols: config.cols

@@ -19,8 +19,8 @@ export const init = () => {
   return { type: INIT }
 }
 
-export const gameover = () => {
-  return { type: GAMEOVER }
+export const game_over = () => {
+  return { type: GAME_OVER }
 }
 
 export const clear = () => {
@@ -35,6 +35,6 @@ export const resume = () => {
   return { type: RESUME }
 }
 
-export const game_params = () => {
-  return { type: GAME_PARAMS }
+export const game_params = (params) => {
+  return { type: GAME_PARAMS, payload: params }
 }
