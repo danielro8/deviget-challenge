@@ -19,11 +19,14 @@ const Map = () => {
     //const cellsClicked = useSelector(state => state.game.cellsClicked)
     
     return (
-        <div className="map">
+        <div className="container">
+            <table className="map">
+                <tbody>
                     {map.map((item, row) => {
                         return (
-                            <div key={row} className="row mapRow">
+                            <tr key={row} className="mapRow">
                                 {item.map((subitem, col) => {
+                                    console.log('SUBITEM', subitem)
                                     return (
                                         <Cell
                                             key={col}
@@ -33,9 +36,11 @@ const Map = () => {
                                         />
                                     );
                                 })}
-                            </div>
+                            </tr>
                         );
                     })}
+                </tbody>
+            </table>
         </div>
     );
 }

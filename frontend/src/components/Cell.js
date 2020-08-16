@@ -40,25 +40,26 @@ const Cell = ({ row, column, value }) => {
     }
     return;
   }
-  const handleClick = (target) => {
+  const handleClick = ({ target }) => {
     if (!flag) setClicked(true);
     if (!clicked) incCellsClicked();
     if (!endMineSweeperGame) {
       // Empty cell click --> recursion
-      if (value === "" && target.id === `${row}_${column}`)
+      if (value === "" && target.id === `${row}_${column}`){
         recursionClick(target, row, column);
+      }
       //click bomb scenario --> end game
       if (value === "☀" && !flag) endGame(target);
     }
   }
   const incCellsClicked = async() => {
+    console.log('CellsCLicked', cellsClicked);
     let safeCells = rows * cols - bombCount;
     await dispatch(cell_click({ cellsClicked }))
     if (cellsClicked >= safeCells) alert("☀☀☀ You have won! ☀☀☀");
   }
   const handleContextMenu = (e) => {
     e.preventDefault();
-    let { clicked, flag } = this.state;
     if (!clicked)
       flag ? setFlag("") : setFlag("⚑");
   }

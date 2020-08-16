@@ -16,7 +16,7 @@ const Game = () => {
           </div>
           <StartForm />
           <footer>
-            <div class="footer-copyright text-center py-3">
+            <div className="footer-copyright text-center py-3">
               © 2020 Copyright Daniel Rodríguez López Serra
   </div>
           </footer>

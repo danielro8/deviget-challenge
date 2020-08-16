@@ -73,6 +73,6 @@ p {
 }
 
 .map{
-  width: 90%;
+  max-width: 80vh;
   margin: 0 auto;
 }

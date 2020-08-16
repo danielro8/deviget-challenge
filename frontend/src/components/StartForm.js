@@ -40,11 +40,11 @@ const StartForm = () => {
                 <label>Rows</label>
                 <input type="number" className="form-control" value={selectedRows} min="0" step="1" onChange={(e) => handleChange(e, setSelectedRows)}/>
             </div>
-            <div class="form-group">
+            <div className="form-group">
                 <label>Cols</label>
                 <input type="number" className="form-control" value={selectedCols} min="0" step="1" onChange={(e) => handleChange(e, setSelectedCols)} />
             </div>
-            <div class="form-group">
+            <div className="form-group">
                 <label>Mines</label>
                 <input type="number" className="form-control"value={selectedBombCount} min="0" step="1" onChange={(e) => handleChange(e, setSelectedBombCount)} />
             </div>
