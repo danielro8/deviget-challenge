@@ -80,3 +80,11 @@ p {
   width: 80vh;
   margin: 0 auto;
 }
+caption.win{
+  color: blue;
+  text-align: center;
+}
+caption.defeat{
+  color: red;
+  text-align: center;
+}

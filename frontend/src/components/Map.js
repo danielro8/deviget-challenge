@@ -9,6 +9,7 @@ import Cell from "./Cell";
 } from "../helpers";
 */
 import { useSelector } from 'react-redux'
+import classNames from "classnames";
 
 
 const Map = () => {
@@ -16,24 +17,37 @@ const Map = () => {
     const cols = useSelector(state => state.game.cols)
     const bombCount = useSelector(state => state.game.bombCount)*/
     const map = useSelector(state => state.game.map)
+    const gameover = useSelector(state => state.game.gameover)
+    const win = useSelector(state => state.game.win)
+    console.log('GAMEOVER WIN', gameover, win)
     //const cellsClicked = useSelector(state => state.game.cellsClicked)
-    
     return (
-        <div className="container" style={{overflowX: "auto"}}>
+        <div className="container" style={{ overflowX: "auto" }}>
             <table className="map">
+            {gameover && win && <caption className="win">YOU HAVE WON!!!</caption>}
+            {gameover && !win && <caption className="defeat">YOU HAVE LOST :(</caption>}
                 <tbody>
                     {map.map((item, row) => {
                         return (
                             <tr key={row} className="mapRow">
                                 {item.map((subitem, col) => {
-                                    return (
-                                        <Cell
-                                            key={col}
-                                            row={row}
-                                            column={col}
-                                            value={subitem}
-                                        />
-                                    );
+                                    const cellsClass = classNames({
+                                        cell: true,
+                                        clicked: true,
+                                        bomb: subitem === "☀"
+                                      });
+                                    return gameover ?
+                                        <td
+                                            id={`${row}_${col}`}
+                                            className={cellsClass}>{subitem}
+                                        </td> : (
+                                            <Cell
+                                                key={col}
+                                                row={row}
+                                                column={col}
+                                                value={subitem}
+                                            />
+                                        );
                                 })}
                             </tr>
                         );

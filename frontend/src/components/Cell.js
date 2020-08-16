@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from "classnames";
-import { cell_click } from '../actions';
+import { cell_click, game_over } from '../actions';
 
 const Cell = ({ row, column, value }) => {
   let endMineSweeperGame = false;
@@ -28,20 +28,22 @@ const Cell = ({ row, column, value }) => {
     return;
   }
   
-  const endGame = (target) => {
+  const endGame = async (target) => {
+    console.log('end game');
     endMineSweeperGame = true;
     target.style.backgroundColor = "black";
     let cols = target.parentElement.children.length;
     let rows = target.parentElement.parentElement.children.length;
-    for (let i = 0; i < rows; i++) {
+    await dispatch(game_over({win: false}))
+    /*for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
-        if (document.getElementById(`${i}_${j}`))
-          document.getElementById(`${i}_${j}`).click();
+        //if (document.getElementById(`${i}_${j}`))
+          //document.getElementById(`${i}_${j}`).click();
       }
-    }
+    }*/
     return;
   }
-  const handleClick = ({ target }) => {
+  const handleClick = async({ target }) => {
     if (!flag) setClicked(true);
     if (!clicked) incCellsClicked();
     if (!endMineSweeperGame) {
@@ -50,14 +52,17 @@ const Cell = ({ row, column, value }) => {
         recursionClick(target, row, column);
       }
       //click bomb scenario --> end game
-      if (value === "☀" && !flag) endGame(target);
+      if (value === "☀" && !flag) {
+        await dispatch(game_over({win: false}));
+        //endGame(target);
+      }
     }
   }
   const incCellsClicked = async() => {
     console.log('CellsCLicked', cellsClicked);
     let safeCells = rows * cols - bombCount;
     await dispatch(cell_click({ cellsClicked }))
-    if (cellsClicked >= safeCells) alert("☀☀☀ You have won! ☀☀☀");
+    if (cellsClicked >= safeCells) await dispatch(game_over({win: true}));
   }
   const handleContextMenu = (e) => {
     e.preventDefault();

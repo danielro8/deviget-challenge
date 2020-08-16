@@ -20,8 +20,8 @@ export const init = () => {
   return { type: INIT }
 }
 
-export const game_over = () => {
-  return { type: GAME_OVER }
+export const game_over = (params) => {
+  return { type: GAME_OVER, payload: params }
 }
 
 export const clear = () => {

@@ -41,12 +41,14 @@ const game = (state = initialState, action) => {
         rows: config.rows,
         cols: config.cols,
         map: [],
-        cellsClicked: 1
+        cellsClicked: 1,
+        win: false
       }
     }
 
     case GAME_OVER: {
-      return Object.assign({}, state, { gameover: true })
+      const { win } = action.payload
+      return Object.assign({}, state, { gameover: true, win })
     }
     case CLEAR: {
       return Object.assign({}, state, { clear: true })
