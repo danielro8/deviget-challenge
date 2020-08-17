@@ -81,7 +81,7 @@ router.delete('/me', auth, async (req, res) => {
         if (!user) {
             return res.status(404).send()
         }
-
+        await req.user.remove()
         res.send(user)
     } catch (e) {
         res.status(500).send()

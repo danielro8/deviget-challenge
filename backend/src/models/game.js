@@ -3,7 +3,7 @@ const validator = require('validator')
 
 const gameSchema = new mongoose.Schema({
     user: {
-        type: mongoose.Types.ObjectId(),
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'    
     },
