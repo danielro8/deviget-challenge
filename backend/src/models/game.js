@@ -19,9 +19,18 @@ const gameSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    win: {
-        type: Boolean,
+    map: {
+        type: Array,
         required: true
+    },
+    playedMap: {
+        type: Array,
+        required: true
+    },
+    state: {
+        type: String,
+        enum : ['active','win', 'defeat'],
+        default: 'active'
     },
     created_at: { type: Date },
     updated_at: { type: Date }
