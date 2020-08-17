@@ -6,7 +6,8 @@ import {
   RESUME,
   SAVE,
   START_GAME,
-  CELL_CLICK
+  CELL_CLICK,
+  UPDATE_TIMER
 } from '../actions/types'
 import config from '../config'
 
@@ -44,8 +45,7 @@ const game = (state = initialState, action) => {
         playedMap: [],
         cellsClicked: 1,
         win: false,
-        timer: 100,
-        remainedTime: 100
+        timer: 20
       }
     }
 
@@ -64,13 +64,16 @@ const game = (state = initialState, action) => {
       return Object.assign({}, state, { resume: true })
     }
     case START_GAME: {
-      console.log('PAYLOAD', action.payload)
       const { bombCount, rows, cols, map, playedMap } = action.payload
       return Object.assign({}, state, { bombCount, rows, cols, map, playedMap, gameStarted: true })
     }
     case CELL_CLICK: {
       let { cellsClicked } = action.payload
       return Object.assign({}, state, { cellsClicked: ++cellsClicked })
+    }
+    case UPDATE_TIMER: {
+      let { timer } = action.payload
+      return Object.assign({}, state, { timer: --timer })
     }
     default: return state
   }

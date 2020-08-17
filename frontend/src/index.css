@@ -11,3 +11,63 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+table {
+  display: block;
+  border-collapse: separate;
+  border-spacing: 0px;
+  margin-left: 31%;
+}
+
+td {
+  background-color:gray;
+  border-bottom: 4px solid grey;
+  border-right: 4px solid grey;
+  border-top: 4px solid lightgray;
+  border-left: 4px solid lightgray;
+}
+
+.cell {
+  min-width: 40px;
+  height: 40px;
+  font-size: 30px;
+}
+
+.clicked {
+  min-width: 40px;
+  height: 40px;
+  background-color: grey;
+  border: 4px solid darkgrey !important;
+}
+
+p {
+  margin-left: 31%;
+}
+
+.bomb.clicked {
+  min-width: 40px;
+  height: 40px;
+  color: rgb(216, 0, 0) !important;
+  font-size: 30px;
+  padding: 0px;
+}
+
+.map{
+  width: 80vh;
+  margin: 0 auto;
+}
+caption.win{
+  color: blue;
+  text-align: center;
+}
+caption.defeat{
+  color: red;
+  text-align: center;
+}
+caption.timer{
+  color: red;
+  text-align: center;
+  font-size: 24px;
+}
+footer{
+  padding-top: 20px;
+}

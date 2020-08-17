@@ -1,10 +1,12 @@
 import React from 'react'
 import './Game.css'
-import StartForm from './StartForm'
+//import StartForm from './StartForm'
+//import InitForm from './InitForm'
+
 import { useDispatch } from 'react-redux'
 import { init } from '../actions';
 
-const Game = () => {
+const Game = (Component) => {
   const dispatch = useDispatch()
   dispatch(init())
   return (
@@ -14,7 +16,7 @@ const Game = () => {
           <div className="jumbotron">
             <h1 className="text-center">DEVIGET CHALLENGE MINESWEEPER</h1>
           </div>
-          <StartForm />
+          <Component />
           <footer>
             <div className="footer-copyright text-center py-3">
               © 2020 Copyright Daniel Rodríguez López Serra

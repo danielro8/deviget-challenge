@@ -88,3 +88,11 @@ caption.defeat{
   color: red;
   text-align: center;
 }
+caption.timer{
+  color: red;
+  text-align: center;
+  font-size: 24px;
+}
+footer{
+  padding-top: 20px;
+}

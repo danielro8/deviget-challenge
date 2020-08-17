@@ -7,7 +7,7 @@ import {
     valsAdjacentCounts,
     populatePlayedMap
   } from "../helpers";
-import {start_game} from '../actions';
+import {init, start_game} from '../actions';
 import Map from './Map'
 
 const StartForm = () => {
@@ -27,6 +27,7 @@ const StartForm = () => {
         }
     } 
     const handleStartGame = async (e) =>{
+        await dispatch(init())
         await dispatch(start_game({rows: selectedRows, cols: selectedCols, bombCount: selectedBombCount, map: valsAdjacentCounts(
             populateNestedArray(nestedArray(selectedRows, selectedCols), "☀", selectedBombCount),
             "☀"

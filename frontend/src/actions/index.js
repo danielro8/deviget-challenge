@@ -6,7 +6,8 @@ import {
   RESUME,
   SAVE,
   START_GAME,
-  CELL_CLICK
+  CELL_CLICK,
+  UPDATE_TIMER
 } from './types'
 
 export const toggle = (flagged) => {
@@ -42,4 +43,7 @@ export const start_game = (params) => {
 
 export const cell_click = (params) => {
   return { type: CELL_CLICK, payload: params }
+}
+export const update_timer = (params) => {
+  return { type: UPDATE_TIMER, payload: params }
 }

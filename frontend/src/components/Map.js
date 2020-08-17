@@ -2,11 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Cell from "./Cell";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import classNames from "classnames";
+import { NavLink } from 'react-router-dom';
+import { update_timer, game_over } from '../actions'
 
 
 const Map = () => {
+    const dispatch = useDispatch()
     const map = useSelector(state => state.game.map)
     const playedMap = useSelector(state => state.game.playedMap)
     const gameover = useSelector(state => state.game.gameover)
@@ -14,18 +17,24 @@ const Map = () => {
     const timer = useSelector(state => state.game.timer)
     let [curTimer, setCurTimer] = useState(timer)
     let interval = null
-    
+    const updateTimer = async () => await dispatch(updateTimer({ timer }))
+    const finishGame = async () => await dispatch(game_over({win: false, playedMap}))
+    const restartBtn = () => <NavLink to="/" activeClassName="is-active" className="btn btn-primary" exact={true}>Restart Game</NavLink>
     if (!gameover) {
-        interval = !gameover ? setTimeout(() => setCurTimer(--curTimer), 1000) : null
+        if (curTimer === 0) {
+            finishGame();
+        } else {
+            interval = !gameover ? setTimeout(() => setCurTimer(--curTimer) /*updateTimer({timer})*/, 1000) : null
+        }
     } else if (gameover && interval) {
         clearTimeout(interval)
     }
     return (
-        <div className="container" style={{ overflowX: "auto" }}>
-            <h1 className="text-center">{curTimer}</h1>
+        <div className="container" style={{ overflowX: "auto", overflowY: "hidden" }}>
             <table className="map">
-                {gameover && win && <caption className="win">YOU HAVE WON!!!</caption>}
-                {gameover && !win && <caption className="defeat">YOU HAVE LOST :(</caption>}
+                {!gameover && <caption className="timer">{curTimer}{restartBtn()}</caption>}
+                {gameover && win && <caption className="win">YOU HAVE WON!!!  {restartBtn()}</caption>}
+                {gameover && !win && <caption className="defeat">YOU HAVE LOST :( {restartBtn()}</caption>}
                 <tbody>
                     {map.map((item, row) => {
                         return (
