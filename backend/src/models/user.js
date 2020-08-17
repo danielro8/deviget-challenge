@@ -31,7 +31,9 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Password cannot contain "password"')
             }
         }
-    }
+    },
+    created_at: { type: Date },
+    updated_at: { type: Date }
 })
 
 userSchema.methods.generateAuthToken = async function () {
@@ -59,7 +61,11 @@ userSchema.statics.findByCredentials = async (email, password) => {
 // Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
     const user = this
-
+    if (this.isNew) {
+        this.createdAt = this.updatedAt = Date.now()
+       } else {
+        this.updatedAt = Date.now()
+       }
     if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8)
     }
