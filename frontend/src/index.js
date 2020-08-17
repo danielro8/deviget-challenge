@@ -5,6 +5,8 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import InitForm from './components/InitForm'
 import StartForm from './components/StartForm'
+import Login from './components/Login'
+import Registration from './components/Registration'
 import * as serviceWorker from './serviceWorker'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -24,6 +26,8 @@ ReactDOM.render(
         <Provider store={store}>
           <Switch>
             <Route path="/" component={InitForm} exact={true} />
+            <Route path="/login" component={Login} exact={true} />
+            <Route path="/registration" component={Registration} exact={true} />
             <Route path="/start-game" component={StartForm} exact={true} />
           </Switch>
         </Provider>

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import Cell from "./Cell";
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from "classnames";
@@ -20,6 +20,9 @@ const Map = () => {
     const updateTimer = async () => await dispatch(updateTimer({ timer }))
     const finishGame = async () => await dispatch(game_over({win: false, playedMap}))
     const restartBtn = () => <NavLink to="/" activeClassName="is-active" className="btn btn-primary" exact={true}>Restart Game</NavLink>
+    const handleSaveClick = async() => {
+        //Save code here
+    }
     if (!gameover) {
         if (curTimer === 0) {
             finishGame();
@@ -33,7 +36,7 @@ const Map = () => {
         <div className="container" style={{ overflowX: "auto", overflowY: "hidden" }}>
             <table className="map">
                 {!gameover && <caption className="timer">{curTimer}{restartBtn()}</caption>}
-                {gameover && win && <caption className="win">YOU HAVE WON!!!  {restartBtn()}</caption>}
+                {gameover && win && <caption className="win">YOU HAVE WON!!!  {restartBtn()}<button onClick={handleSaveClick}>Save</button></caption>}
                 {gameover && !win && <caption className="defeat">YOU HAVE LOST :( {restartBtn()}</caption>}
                 <tbody>
                     {map.map((item, row) => {
