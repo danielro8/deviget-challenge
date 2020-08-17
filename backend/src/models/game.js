@@ -15,6 +15,10 @@ const gameSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    bombs: {
+        type: Number,
+        required: true
+    },
     win: {
         type: Boolean,
         required: true
@@ -25,7 +29,7 @@ const gameSchema = new mongoose.Schema({
 
 gameSchema.pre('save', async function (next) {
     if (this.isNew) {
-        this.createdAt = this.meta.updatedAt = Date.now()
+        this.createdAt = this.updatedAt = Date.now()
        } else {
         this.updatedAt = Date.now()
        }

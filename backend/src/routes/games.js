@@ -16,9 +16,6 @@ router.post('/', async (req, res) => {
 router.get('/me', auth, async (req, res) => {
     try {
         const games = await Game.find({user: req.user._id}).exec()
-        if (!games) {
-            return res.status(404).send()
-        }
         res.send(games)
     } catch (e) {
         res.status(500).send()
