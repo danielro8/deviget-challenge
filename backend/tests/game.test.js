@@ -46,7 +46,6 @@ test('Should create a new game', async () => {
         rows: 10,
         cols: 10,
         bombs: 20,
-        state: 'active'
     }).expect(201)
 })
 

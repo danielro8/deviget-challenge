@@ -62,6 +62,10 @@ userSchema.statics.findByCredentials = async (email, password) => {
 userSchema.pre('save', async function (next) {
     const user = this
     if (this.isNew) {
+        const user = await User.findOne({ email: this.email })
+        if(user){
+            next({error: "User already exists"})
+        }
         this.createdAt = this.updatedAt = Date.now()
        } else {
         this.updatedAt = Date.now()
