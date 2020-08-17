@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
-    "test": "env-cmd -f ./config/test.env jest"
+    "dev": "env-cmd -f ./config/dev.env nodemon ./bin/www",
+    "test": "env-cmd -f ./config/test.env jest --testEnvironment=node --verbose --forceExit --watchAll --maxWorkers=1"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",

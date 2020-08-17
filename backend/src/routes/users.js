@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../models/user')
 const router = new express.Router()
+const auth = require('../middleware/auth')
 
 router.post('/', async (req, res) => {
     const user = new User(req.body)
@@ -24,7 +25,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const users = await User.find({})
         res.send(users)
@@ -33,7 +34,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
@@ -49,7 +50,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.patch('/me', async (req, res) => {
+router.patch('/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -59,7 +60,7 @@ router.patch('/me', async (req, res) => {
     }
 
     try {
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(req.user._id)
 
         updates.forEach((update) => user[update] = req.body[update])
         await user.save()
@@ -74,10 +75,9 @@ router.patch('/me', async (req, res) => {
     }
 })
 
-router.delete('/me', async (req, res) => {
+router.delete('/me', auth, async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id)
-
+        const user = await User.findByIdAndDelete(req.user._id)
         if (!user) {
             return res.status(404).send()
         }
