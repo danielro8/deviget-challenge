@@ -7,7 +7,9 @@ import {
   SAVE,
   START_GAME,
   CELL_CLICK,
-  UPDATE_TIMER
+  UPDATE_TIMER,
+  LOGIN,
+  LOGOUT
 } from './types'
 
 export const toggle = (flagged) => {
@@ -46,4 +48,10 @@ export const cell_click = (params) => {
 }
 export const update_timer = (params) => {
   return { type: UPDATE_TIMER, payload: params }
+}
+export const login = (params) => {
+  return { type: LOGIN, payload: params }
+}
+export const logout = (params) => {
+  return { type: LOGOUT, payload: params }
 }

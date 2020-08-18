@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import classNames from "classnames";
 import { NavLink } from 'react-router-dom';
 import { update_timer, game_over } from '../actions'
-
+import Cookies from 'universal-cookie';
+import {Redirect} from 'react-router-dom'
 
 const Map = () => {
     const dispatch = useDispatch()
@@ -17,6 +18,11 @@ const Map = () => {
     const timer = useSelector(state => state.game.timer)
     let [curTimer, setCurTimer] = useState(timer)
     let interval = null
+    const cookies = new Cookies();
+    const cookie = cookies.get('devigetToken')
+    if (!cookie) {
+        return <Redirect to="/login" />
+    }
     const updateTimer = async () => await dispatch(updateTimer({ timer }))
     const finishGame = async () => await dispatch(game_over({win: false, playedMap}))
     const restartBtn = () => <NavLink to="/" activeClassName="is-active" className="btn btn-primary" exact={true}>Restart Game</NavLink>

@@ -12,12 +12,11 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
- 
+
 const store = createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
-
 ReactDOM.render(
   <BrowserRouter>
     <div className="container-fluid">

@@ -7,7 +7,9 @@ import {
   SAVE,
   START_GAME,
   CELL_CLICK,
-  UPDATE_TIMER
+  UPDATE_TIMER,
+  LOGIN,
+  LOGOUT
 } from '../actions/types'
 import config from '../config'
 
@@ -74,6 +76,14 @@ const game = (state = initialState, action) => {
     case UPDATE_TIMER: {
       let { timer } = action.payload
       return Object.assign({}, state, { timer: --timer })
+    }
+    case LOGIN: {
+      const { user } = action.payload
+      return Object.assign({}, state, { logged: true, user })
+    }
+    case LOGOUT: {
+      const { user } = action.payload
+      return Object.assign({}, state, { logged: false, user: undefined })
     }
     default: return state
   }

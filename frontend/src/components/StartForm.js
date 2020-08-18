@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
+import Cookies from 'universal-cookie';
+import {Redirect} from 'react-router-dom'
 import '../css/StartForm.css'
 import {
     nestedArray,
@@ -19,7 +21,11 @@ const StartForm = () => {
     const [selectedCols, setSelectedCols] = useState(cols)
     const [selectedBombCount, setSelectedBombCount] = useState(bombCount)
     const [showMap, setShowMap] = useState(false)
-    
+    const cookies = new Cookies();
+    const cookie = cookies.get('devigetToken')
+    if (!cookie) {
+        return <Redirect to="/login" />
+    }
     const handleChange = (e, setElement) => {
         const re = /^[0-9\b]+$/;
         if (e.target.value === '' || re.test(e.target.value)) {
