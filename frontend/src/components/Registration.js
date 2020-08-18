@@ -30,7 +30,7 @@ const Registration = () => {
         }
         try {
             const rta = await post('users', body)
-            await dispatch(login(rta.user))
+            await dispatch(login({user: rta.user}))
             const cookies = new Cookies();
             cookies.set('devigetToken', JSON.stringify({token: rta.token}))
             setAuthorizationToken(rta.token)

@@ -9,8 +9,11 @@ import {
     valsAdjacentCounts,
     populatePlayedMap
   } from "../helpers";
-import {init, start_game} from '../actions';
+import {init, start_game, get_user} from '../actions';
 import Map from './Map'
+import { get, post } from '../api'
+import setAuthorizationToken from '../helpers/setAuthorizationToken';
+
 
 const StartForm = () => {
     const dispatch = useDispatch()
@@ -21,23 +24,57 @@ const StartForm = () => {
     const [selectedCols, setSelectedCols] = useState(cols)
     const [selectedBombCount, setSelectedBombCount] = useState(bombCount)
     const [showMap, setShowMap] = useState(false)
+    const user = useSelector(state => state.game.user)
     const cookies = new Cookies();
     const cookie = cookies.get('devigetToken')
+    console.log('USER IN STATE', user)
     if (!cookie) {
         return <Redirect to="/login" />
+    } else {
+        setAuthorizationToken(cookie.token)
+    }
+    const getUser = async() => {
+        try {
+            const user = await get('users/me')
+            console.log('user', user);
+            await dispatch(get_user({user: user}))
+        } catch (err) {
+            console.log('err', err)
+            alert('Error in creating user. Try again')
+            return <Redirect to="/start-game" />
+            console.log(err)
+        }
+    } 
+    if(!user){
+        getUser()
     }
     const handleChange = (e, setElement) => {
         const re = /^[0-9\b]+$/;
         if (e.target.value === '' || re.test(e.target.value)) {
             setElement(e.target.value)
         }
+    }
+    const createGame = async () => {
+        try {
+            const body = {
+                user: user._id,
+                rows: selectedRows,
+                cols: selectedCols,
+                bombs: selectedBombCount
+            }
+            const rta = await post('games', body)
+            return rta;
+        } catch (err) {
+            console.log('err', err)
+            alert('Error in creating game. Try again')
+            return <Redirect to="/start-game" />
+            console.log(err)
+        }
     } 
     const handleStartGame = async (e) =>{
-        await dispatch(init())
-        await dispatch(start_game({rows: selectedRows, cols: selectedCols, bombCount: selectedBombCount, map: valsAdjacentCounts(
-            populateNestedArray(nestedArray(selectedRows, selectedCols), "☀", selectedBombCount),
-            "☀"
-          ), playedMap: populatePlayedMap(selectedRows, selectedCols)}))
+          const game = await createGame() 
+          await dispatch(start_game({rows: selectedRows, cols: selectedCols, bombCount: selectedBombCount, map: game.game.map
+          , playedMap: game.game.playedMap, gameId: game.game._id}))
           setShowMap(true);
        
     }

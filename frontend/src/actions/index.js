@@ -9,7 +9,8 @@ import {
   CELL_CLICK,
   UPDATE_TIMER,
   LOGIN,
-  LOGOUT
+  LOGOUT,
+  GET_USER
 } from './types'
 
 export const toggle = (flagged) => {
@@ -54,4 +55,7 @@ export const login = (params) => {
 }
 export const logout = (params) => {
   return { type: LOGOUT, payload: params }
+}
+export const get_user = (params) => {
+  return { type: GET_USER, payload: params }
 }
