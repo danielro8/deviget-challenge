@@ -93,7 +93,6 @@ const game = (state = initialState, action) => {
       return Object.assign({}, state, { logged: true, user })
     }
     case LOGOUT: {
-      const { user } = action.payload
       return Object.assign({}, state, { logged: false, user: undefined })
     }
     case GET_USER: {

@@ -53,8 +53,8 @@ export const update_timer = (params) => {
 export const login = (params) => {
   return { type: LOGIN, payload: params }
 }
-export const logout = (params) => {
-  return { type: LOGOUT, payload: params }
+export const logout = () => {
+  return { type: LOGOUT}
 }
 export const get_user = (params) => {
   return { type: GET_USER, payload: params }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { post } from '../api'
-import {Redirect} from 'react-router-dom'
+//import {Redirect} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {login} from '../actions';
 import setAuthorizationToken from '../helpers/setAuthorizationToken';
@@ -43,7 +43,8 @@ const Registration = () => {
         }
     }
     if(isRegistered){
-        return <Redirect to="/" />
+        //return <Redirect to="/" />
+        window.location.href = '/'
     }
     return (
         <div className="container register-form">

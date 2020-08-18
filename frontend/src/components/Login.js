@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { post } from '../api'
-import { Redirect } from 'react-router-dom'
+//import { Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { login } from '../actions';
 import setAuthorizationToken from '../helpers/setAuthorizationToken';
@@ -35,7 +35,8 @@ const Login = () => {
         }
     }
     if(isLogged){
-        return <Redirect to="/" />
+        window.location.href = '/'
+        //return <Redirect to="/" />
     }
     return (
         <div className="container">
@@ -52,12 +53,8 @@ const Login = () => {
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">Log in</button>
                     </div>
-                    <div class="clearfix">
-                        <label class="float-left form-check-label"><input type="checkbox" /> Remember me</label>
-                        <a href="#" class="float-right">Forgot Password?</a>
-                    </div>
                 </form>
-                <p class="text-center"><a href="#">Create an Account</a></p>
+                <div className="row text-center"><a href="/registration">Create an Account</a></div>
             </div></div>
     )
 }

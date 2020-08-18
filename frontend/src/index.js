@@ -22,8 +22,8 @@ ReactDOM.render(
   <BrowserRouter>
     <div className="container-fluid">
       <div className="row">
-        <Header />
         <Provider store={store}>
+          <Header />
           <Switch>
             <Route path="/" component={InitForm} exact={true} />
             <Route path="/login" component={Login} exact={true} />
