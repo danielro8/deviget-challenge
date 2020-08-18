@@ -10,6 +10,10 @@
   },
   "servers" : [
     {
+      "url" : "http://ec2-54-167-152-205.compute-1.amazonaws.com/:3000",
+      "description" : "Production"
+    },
+    {
     "url" : "http://localhost:3000",
     "description" : "Local"
   } ],
