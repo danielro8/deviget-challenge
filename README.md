@@ -23,6 +23,8 @@ the express-generator module as scaffolding
  
 The **security token** gotten in the **login** is **stored** in a  **cookie** and sent in the **Authorization header** as a **bearer token**.
 
+The** API testing framework** used is **JEST**
+
 There are two **collections**:
 
    **Users**
