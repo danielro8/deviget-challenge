@@ -32,8 +32,8 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    created_at: { type: Date },
-    updated_at: { type: Date }
+    createdAt: { type: Date },
+    updatedAt: { type: Date }
 })
 
 userSchema.methods.generateAuthToken = async function () {

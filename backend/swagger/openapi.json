@@ -209,7 +209,7 @@
         "properties" : {
           "user" : {
             "type" : "string",
-            "example" : "User ID (Object ID format)"
+            "example" : "5f3bd6c6f2e04441790d8e27"
           },
           "rows" : {
             "type" : "integer",
@@ -226,13 +226,18 @@
         }
       },"SaveGame": {
         "required": [
-          "playedMap"
+          "playedMap",
+          "timer"
         ],
         "type": "object",
         "properties": {
           "playedMap": {
             "type": "array",
-            "example": "playedMap:[{clicked: true}, {value: '*'}"
+            "example": "[{clicked: true}, {value: '*'}"
+          },
+          "timer": {
+            "type": "integer",
+            "example": "50"
           }
         }
       }

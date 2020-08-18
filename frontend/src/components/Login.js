@@ -25,7 +25,7 @@ const Login = () => {
             const rta = await post('users/login', body)
             await dispatch(login({user: rta.user}))
             const cookies = new Cookies();
-            cookies.set('devigetToken', JSON.stringify({token: rta.token}))
+            cookies.set('devigetToken', JSON.stringify({token: rta.token}), {maxAge: 604800})
             setAuthorizationToken(rta.token)
             setIsLogged(true)
 

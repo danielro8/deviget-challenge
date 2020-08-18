@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import classNames from "classnames"
 import { cell_click, game_over } from '../actions'
 
-const Cell = ({ row, column, value }) => {
+const Cell = ({ row, column, value, propClicked }) => {
   let endMineSweeperGame = false
   const dispatch = useDispatch()
   const rows = useSelector(state => state.game.rows)
@@ -11,8 +11,8 @@ const Cell = ({ row, column, value }) => {
   const bombCount = useSelector(state => state.game.bombCount)
   const cellsClicked = useSelector(state => state.game.cellsClicked)
   const playedMap = useSelector(state => state.game.playedMap)
-  const [clicked, setClicked] = useState(false)
-  const [flag, setFlag] = useState("")
+  const [clicked, setClicked] = useState(propClicked)
+  const [flag, setFlag] = useState(value === '⚑' ? '⚑' : '')
   const _PlayedMap = Object.assign(playedMap);
   const recursionClick = (target, row, column) => {
     target.id = `${row}_${column}_`
@@ -23,6 +23,7 @@ const Cell = ({ row, column, value }) => {
         setImmediate(() => {
           if (document.getElementById(`${i}_${j}`)){
             _PlayedMap[i][j].clicked = true
+            _PlayedMap[i][j].value = flag ? flag : value
             document.getElementById(`${i}_${j}`).click()
           }
         })
@@ -45,11 +46,14 @@ const Cell = ({ row, column, value }) => {
     if (!endMineSweeperGame) {
       // Empty cell click --> recursion
       _PlayedMap[row][column].clicked = true
+      _PlayedMap[row][column].value = flag ? flag : value
+      console.log('Enttreeeeee a handleclick', value)
       if (value === "" && target.id === `${row}_${column}`){
         recursionClick(target, row, column)
       }
       //click bomb scenario --> end game
       if (value === "☀" && !flag) {
+        console.log('Bomba :(')
         await dispatch(game_over({win: false}))
         //endGame(target)
       }
@@ -57,6 +61,7 @@ const Cell = ({ row, column, value }) => {
   }
   const incCellsClicked = async() => {
     let safeCells = rows * cols - bombCount
+    console.log('CELLCLISCKED', cellsClicked, 'SAFE CELLS',safeCells)
     await dispatch(cell_click({ cellsClicked }))
     if (cellsClicked >= safeCells) await dispatch(game_over({win: true, playedMap: _PlayedMap}))
   }

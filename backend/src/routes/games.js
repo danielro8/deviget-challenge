@@ -2,9 +2,20 @@ const express = require('express')
 const Game = require('../models/game')
 const router = new express.Router()
 const auth = require('../middleware/auth')
-
+const {
+    nestedArray,
+    populateNestedArray,
+    valsAdjacentCounts,
+    populatePlayedMap
+  } = require("../helpers")
+  
 router.post('/', async (req, res) => {
-    const game = new Game(req.body)
+    const map = valsAdjacentCounts(
+        populateNestedArray(nestedArray(req.body.rows, req.body.cols), "☀", req.body.bombs),
+        "☀"
+    )
+    const playedMap = populatePlayedMap(req.body.rows, req.body.cols, map)
+    const game = new Game({...req.body, map, playedMap})
     try {
         await game.save()
         res.status(201).send({ game })
@@ -24,7 +35,7 @@ router.get('/me', auth, async (req, res) => {
 
 router.patch('/:gameId', auth, async (req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['playedMap']
+    const allowedUpdates = ['playedMap', 'state', 'timer', 'cellsClicked']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {

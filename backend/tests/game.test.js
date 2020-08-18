@@ -19,17 +19,21 @@ const userOne = {
     email: 'john@doe.com',
     password: '33r342r34f!!'
 }
+const map =  valsAdjacentCounts(
+    populateNestedArray(nestedArray(10, 10), "☀", 20),
+    "☀"
+)
+const playedMap = populatePlayedMap(10, 10, map)
 const gameOne = {
     _id: gameOneId,
     user: userOne._id,
     rows: 10,
     cols: 10,
     bombs: 20,
-    map: valsAdjacentCounts(
-        populateNestedArray(nestedArray(10, 10), "☀", 20),
-        "☀"
-    ),
-    playedMap: populatePlayedMap(10, 10),
+    map,
+    playedMap,
+    timer: 50,
+    cellsClicked: 20,
     state: 'active'
 
 }
@@ -46,6 +50,8 @@ test('Should create a new game', async () => {
         rows: 10,
         cols: 10,
         bombs: 20,
+        timer: 20,
+        cellsClicked: 20
     }).expect(201)
 })
 

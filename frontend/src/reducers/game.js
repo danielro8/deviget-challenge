@@ -73,11 +73,12 @@ const game = (state = initialState, action) => {
       return Object.assign({}, state, { save: true, playedMap, remainedTime })
     }
     case RESUME: {
-      return Object.assign({}, state, { resume: true })
+      const { bombCount, rows, cols, map, playedMap, timer, gameId, cellsClicked } = action.payload
+      return Object.assign({}, state, { bombCount, rows, cols, map, playedMap, timer, cellsClicked, gameId, resume: true, gameover: false, win: false, save: false })
     }
     case START_GAME: {
-      const { bombCount, rows, cols, map, playedMap, gameId } = action.payload
-      return Object.assign({}, state, { bombCount, rows, cols, map, playedMap, gameId, gameStarted: true })
+      const { bombCount, rows, cols, map, playedMap, timer, gameId } = action.payload
+      return Object.assign({}, state, { bombCount, rows, cols, map, playedMap, timer, gameId, gameStarted: true, resume: false, save: false, cellsClicked: 1, gameover: false, win: false })
     }
     case CELL_CLICK: {
       let { cellsClicked } = action.payload

@@ -54,7 +54,8 @@ const StartForm = () => {
                 rows: selectedRows,
                 cols: selectedCols,
                 bombs: selectedBombCount,
-                timer: 60
+                timer: 60,
+                cellsClicked: 1
             }
             const rta = await post('games', body)
             return rta;
@@ -68,7 +69,7 @@ const StartForm = () => {
     const handleStartGame = async (e) =>{
           const game = await createGame() 
           await dispatch(start_game({rows: selectedRows, cols: selectedCols, bombCount: selectedBombCount, map: game.game.map
-          , playedMap: game.game.playedMap, gameId: game.game._id}))
+          , playedMap: game.game.playedMap, timer: 60, gameId: game.game._id}))
           setShowMap(true);
        
     }

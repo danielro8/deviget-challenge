@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Cell from "./Cell";
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from "classnames";
@@ -14,7 +14,9 @@ const Map = () => {
     const dispatch = useDispatch()
     const map = useSelector(state => state.game.map)
     const playedMap = useSelector(state => state.game.playedMap)
+    const cellsClicked = useSelector(state => state.game.cellsClicked)
     const gameover = useSelector(state => state.game.gameover)
+    const resume = useSelector(state => state.game.resume)
     const win = useSelector(state => state.game.win)
     const timer = useSelector(state => state.game.timer)
     const gameId = useSelector(state => state.game.gameId )
@@ -39,12 +41,13 @@ const Map = () => {
         const rta = await patch('games', payload, gameId)
         await dispatch(game_over({win: false, playedMap}))
     }
-    const restartBtn = () => <NavLink to="/" activeClassName="is-active" className="btn btn-primary" exact={true}>Restart Game</NavLink>
+    const restartBtn = () => <button className="btn btn-primary" onClick={()=> window.location.href="/"}>Restart Game</button>/*<NavLink to="/" activeClassName="is-active" className="btn btn-primary" exact={true}>Restart Game</NavLink>*/
     const handleSaveClick = async() => {
         try {
             const payload = {
                 playedMap,
-                timer
+                timer: curTimer,
+                cellsClicked
             }
             const rta = await patch('games', payload, gameId)
             console.log('saved gameee', rta);
@@ -80,21 +83,26 @@ const Map = () => {
                         return (
                             <tr key={row} className="mapRow">
                                 {item.map((subitem, col) => {
-                                    const cellsClass = classNames({
+                                    const cellsClassGameOver = classNames({
                                         cell: true,
                                         clicked: playedMap[row][col].clicked ? true : false,
-                                        bomb: subitem === "☀"
+                                        bomb: subitem === "☀" && !win
                                     });
-                                    return gameover ?
+                                    const cellsClassResume = classNames({
+                                        cell: true,
+                                        clicked: playedMap[row][col].clicked ? true : false
+                                    });
+                                    return gameover?
                                         <td
                                             id={`${row}_${col}`}
-                                            className={cellsClass}>{subitem}
-                                        </td> : (
+                                            className={cellsClassGameOver}>{subitem}
+                                        </td>  : (
                                             <Cell
                                                 key={col}
                                                 row={row}
                                                 column={col}
-                                                value={subitem}
+                                                value={resume ? playedMap[row][col].value : subitem}
+                                                propClicked={resume ? playedMap[row][col].clicked : false}
                                             />
                                         );
                                 })}

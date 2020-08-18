@@ -9,6 +9,7 @@ router.post('/', async (req, res) => {
     try {
         await user.save()
         const token = await user.generateAuthToken()
+        user.password = undefined
         res.status(201).send({ user, token })
     } catch (e) {
         res.status(400).send(e)
@@ -19,16 +20,18 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
+        user.password = undefined
         res.send({ user, token })
     } catch (e) {
         res.status(400).send()
     }
 })
 
-router.get('/', auth, async (req, res) => {
+router.get('/me', auth, async (req, res) => {
     try {
-        const users = await User.find({})
-        res.send(users)
+        const user = await User.findById(req.user._id)
+        user.password = undefined
+        res.send(user)
     } catch (e) {
         res.status(500).send()
     }

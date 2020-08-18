@@ -19,6 +19,10 @@ const gameSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    timer: {
+        type: Number,
+        required: true
+    },
     map: {
         type: Array,
         required: true
@@ -27,13 +31,17 @@ const gameSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    cellsClicked: {
+        type: Number,
+        required: true
+    },
     state: {
         type: String,
         enum : ['active','win', 'defeat'],
         default: 'active'
     },
-    created_at: { type: Date },
-    updated_at: { type: Date }
+    createdAt: { type: Date },
+    updatedAt: { type: Date }
 })
 
 gameSchema.pre('save', async function (next) {

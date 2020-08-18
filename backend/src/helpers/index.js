@@ -66,15 +66,15 @@ const floorRand = (scale) => {
   return Math.floor(Math.random() * scale);
 }
 
-const populatePlayedMap = (rows, cols) => {
-  const map = []
+const populatePlayedMap = (rows, cols, map) => {
+  const playedMap = []
   for (let i = 0; i < rows; i++) {
-    map[i] = [];
+    playedMap[i] = [];
     for (let j = 0; j < cols; j++) {
-      map[i][j] = {clicked: false, value: ""};
+      playedMap[i][j] = {clicked: false, value: map[i][j]};
     }
   }
-  return map;
+  return playedMap;
 }
 module.exports = {
   nestedArray,

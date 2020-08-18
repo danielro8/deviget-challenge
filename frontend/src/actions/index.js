@@ -36,8 +36,8 @@ export const save = () => {
   return { type: SAVE }
 }
 
-export const resume = () => {
-  return { type: RESUME }
+export const resume = (params) => {
+  return { type: RESUME, payload: params }
 }
 
 export const start_game = (params) => {
