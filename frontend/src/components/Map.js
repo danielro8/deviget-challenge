@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import { update_timer, game_over } from '../actions'
 import Cookies from 'universal-cookie';
 import {Redirect} from 'react-router-dom'
+import { patch } from '../api'
 
 const Map = () => {
     const dispatch = useDispatch()
@@ -16,6 +17,7 @@ const Map = () => {
     const gameover = useSelector(state => state.game.gameover)
     const win = useSelector(state => state.game.win)
     const timer = useSelector(state => state.game.timer)
+    const gameId = useSelector(state => state.game.gameId )
     let [curTimer, setCurTimer] = useState(timer)
     let interval = null
     const cookies = new Cookies();
@@ -24,10 +26,36 @@ const Map = () => {
         return <Redirect to="/login" />
     }
     const updateTimer = async () => await dispatch(updateTimer({ timer }))
-    const finishGame = async () => await dispatch(game_over({win: false, playedMap}))
+    const updateGameState = async() => {
+        const payload = {
+            state: win ? 'win' : 'defeat'
+        }
+        const rta = await patch('games', payload, gameId)
+    }
+    const finishGame = async () => {
+        const payload = {
+            state: 'defeat'
+        }
+        const rta = await patch('games', payload, gameId)
+        await dispatch(game_over({win: false, playedMap}))
+    }
     const restartBtn = () => <NavLink to="/" activeClassName="is-active" className="btn btn-primary" exact={true}>Restart Game</NavLink>
     const handleSaveClick = async() => {
-        //Save code here
+        try {
+            const payload = {
+                playedMap,
+                timer
+            }
+            const rta = await patch('games', payload, gameId)
+            console.log('saved gameee', rta);
+            alert('Game saved!!!')
+            //await dispatch(get_user({user: user}))
+        } catch (err) {
+            console.log('err', err)
+            alert('Error in saving game. Try again')
+            return <Redirect to="/start-game" />
+            console.log(err)
+        }
     }
     if (!gameover) {
         if (curTimer === 0) {
@@ -38,11 +66,14 @@ const Map = () => {
     } else if (gameover && interval) {
         clearTimeout(interval)
     }
+    if(gameover){
+        updateGameState()
+    }
     return (
         <div className="container" style={{ overflowX: "auto", overflowY: "hidden" }}>
             <table className="map">
-                {!gameover && <caption className="timer">{curTimer}{restartBtn()}</caption>}
-                {gameover && win && <caption className="win">YOU HAVE WON!!!  {restartBtn()}<button onClick={handleSaveClick}>Save</button></caption>}
+                {!gameover && <caption className="timer">{curTimer}{restartBtn()} <button className="btn btn-primary" onClick={handleSaveClick}>Save</button></caption>}
+                {gameover && win && <caption className="win">YOU HAVE WON!!!  {restartBtn()}</caption>}
                 {gameover && !win && <caption className="defeat">YOU HAVE LOST :( {restartBtn()}</caption>}
                 <tbody>
                     {map.map((item, row) => {

@@ -28,7 +28,7 @@ const initialState = {
   playedMap: [],
   cellsClicked: 1,
   win: false,
-  timer: 20
+  timer: 60
 }
 
 const game = (state = initialState, action) => {

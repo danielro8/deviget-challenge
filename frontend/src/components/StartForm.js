@@ -3,13 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import Cookies from 'universal-cookie';
 import {Redirect} from 'react-router-dom'
 import '../css/StartForm.css'
-import {
-    nestedArray,
-    populateNestedArray,
-    valsAdjacentCounts,
-    populatePlayedMap
-  } from "../helpers";
-import {init, start_game, get_user} from '../actions';
+import {start_game, get_user} from '../actions';
 import Map from './Map'
 import { get, post } from '../api'
 import setAuthorizationToken from '../helpers/setAuthorizationToken';
@@ -27,7 +21,6 @@ const StartForm = () => {
     const user = useSelector(state => state.game.user)
     const cookies = new Cookies();
     const cookie = cookies.get('devigetToken')
-    console.log('USER IN STATE', user)
     if (!cookie) {
         return <Redirect to="/login" />
     } else {
@@ -60,7 +53,8 @@ const StartForm = () => {
                 user: user._id,
                 rows: selectedRows,
                 cols: selectedCols,
-                bombs: selectedBombCount
+                bombs: selectedBombCount,
+                timer: 60
             }
             const rta = await post('games', body)
             return rta;

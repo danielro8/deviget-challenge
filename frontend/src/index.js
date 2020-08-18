@@ -4,6 +4,7 @@ import './index.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import InitForm from './components/InitForm'
+import ResumeForm from './components/ResumeForm'
 import StartForm from './components/StartForm'
 import Login from './components/Login'
 import Registration from './components/Registration'
@@ -28,6 +29,7 @@ ReactDOM.render(
             <Route path="/login" component={Login} exact={true} />
             <Route path="/registration" component={Registration} exact={true} />
             <Route path="/start-game" component={StartForm} exact={true} />
+            <Route path="/resume-game" component={ResumeForm} exact={true} />
           </Switch>
         </Provider>
         <Footer />
