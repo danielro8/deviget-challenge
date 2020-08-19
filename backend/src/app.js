@@ -21,8 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', apiDocRouter);
-app.use('/users', usersRouter);
-app.use('/games', gamesRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/games', gamesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
