@@ -1,234 +1,298 @@
 {
-  "openapi" : "3.0.0",
-  "info" : {
-    "title" : "Deviget Mindsweeper Challenge API",
-    "description" : "This API is for managing the minesweeper game",
-    "contact" : {
-      "email" : "danieledmundorodriguezls@gmail.com"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Deviget Mindsweeper Challenge API",
+    "description": "This API is for managing the minesweeper game",
+    "contact": {
+      "email": "danieledmundorodriguezls@gmail.com"
     },
-    "version" : "1.0.0"
+    "version": "1.0.0"
   },
-  "servers" : [
+  "servers": [
     {
-      "url" : "http://ec2-54-167-152-205.compute-1.amazonaws.com/:3000",
-      "description" : "Production"
+      "url": "http://ec2-54-167-152-205.compute-1.amazonaws.com:3000/api",
+      "description": "Production"
     },
     {
-    "url" : "http://localhost:3000",
-    "description" : "Local"
-  } ],
-  "paths" : {
+      "url": "http://localhost:3001/api",
+      "description": "Local"
+    }
+  ],
+  "paths": {
     "/users": {
-      "post" : {
-        "tags" : [ "User" ],
-        "summary" : "Register user",
-        "description" : "Register user",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Users"
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Register user",
+        "description": "Register user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Users"
               }
             }
           }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns created user with token"
           },
-        "responses" : {
-          "201" : {
-            "description" : "Returns created user with token"
-          }, "400" : {
-            "description" : "'error': 'User already exists'"
+          "400": {
+            "description": "'error': 'User already exists'"
           },
-          "500" : {
-            "description" : "Error when retrieving information from the database. Returns the exception."
+          "500": {
+            "description": "Error when retrieving information from the database. Returns the exception."
           }
         }
       }
     },
     "/users/login": {
-      "post" : {
-        "tags" : [ "User" ],
-        "summary" : "Login User",
-        "description" : "Log user in the system",
-      "requestBody" : {
-        "content" : {
-          "application/json" : {
-            "schema" : {
-              "$ref" : "#/components/schemas/Login"
-            }
-          }
-        }
-        },
-        "responses" : {
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "200" : {
-            "description" : "User object with token"
-          }
-        }
-    }},
-    "/users/me": {
-      "delete" : {
-        "tags" : [ "User" ],
-        "summary" : "Delete user",
-        "description" : "Delete current logged user",
-        "security": {
-          "BearerAuthTokenUser": []
-        },
-        "responses" : {
-          "401" : {
-            "description" : "User not found"
-          },
-          "200" : {
-          }
-        }
-    }},
-    "/games": {
-      "post" : {
-        "tags" : [ "Game" ],
-        "summary" : "Create game",
-        "description" : "Register user",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Games"
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Login User",
+        "description": "Log user in the system",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
               }
             }
           }
+        },
+        "responses": {
+          "200": {
+            "description": "User object with token"
           },
-        "responses" : {
-          "201" : {
-            "description" : "Returns created game with map"
-          }, "400" : {
-            "description" : "'error': 'User already exists'"
-          },
-          "500" : {
-            "description" : "Error when retrieving information from the database. Returns the exception."
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
-    }, "/games/me": {
-      "get" : {
-        "tags" : [ "Game" ],
-        "summary" : "Get games for user",
-        "description" : "Get all games for current logged user",
-        "security": {
-          "BearerAuthTokenUser": []
-        },
-        "responses" : {
-          "200" : {
-            "description" : "array of games"
-          }, "401" : {
-            "description" : "Please Authenticate."
-          },
-          "500" : {
-            "description" : "Error when retrieving information from the database. Returns the exception."
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "User" ],
-        "summary" : "Delete user games",
-        "description" : "Delete current user games",
-        "security": {
-          "BearerAuthTokenUser": []
-        },
-        "responses" : {
-          "401" : {
-            "description" : "User not found"
-          },
-          "200" : {
-          }
-        }
-    }
     },
-    "/games/{gameId}": {
-      "patch" : {
-        "tags" : [ "Game" ],
-        "summary" : "Save a game progress",
-        "description" : "Save a game progress",
-      "requestBody" : {
-        "content" : {
-          "application/json" : {
-            "schema" : {
-              "$ref" : "#/components/schemas/SaveGame"
+    "/users/me": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete user",
+        "description": "Delete current logged user",
+        "security": [
+          {
+            "BearerAuthTokenUser": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/games": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Create game",
+        "description": "Create a game for the current user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Games"
+              }
             }
           }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns created game with map"
+          },
+          "400": {
+            "description": "'error': 'User already exists'"
+          },
+          "500": {
+            "description": "Error when retrieving information from the database. Returns the exception."
+          }
         }
+      }
+    },
+    "/games/me": {
+      "get": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Get games for user",
+        "description": "Get all games for current logged user",
+        "security": [
+          {
+            "BearerAuthTokenUser": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "array of games"
+          },
+          "401": {
+            "description": "Please Authenticate."
+          },
+          "500": {
+            "description": "Error when retrieving information from the database. Returns the exception."
+          }
         }
       },
-        "responses" : {
-          "401" : {
-            "description" : "User not found"
+      "delete": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Delete user games",
+        "description": "Delete current user games",
+        "security": [
+          {
+            "BearerAuthTokenUser": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
           },
-          "500" : {
-            "description" : "Product Not Found"
-          },
-          "200" : {
-            "description" : "games saved"
+          "401": {
+            "description": "User not found"
           }
         }
+      }
+    },
+    "/games/{gameId}": {
+      "patch": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Save a game progress",
+        "description": "Save a game progress",
+	"security": [
+          {
+            "BearerAuthTokenUser": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "gameId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minimum": 1
+            },
+            "description": "The user ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveGame"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "games saved"
+          },
+          "401": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Product Not Found"
+          }
+        }
+      }
     }
   },
-  "components" : {
-    "securitySchemes":{
-      "BearerAuthTokenUser":
-      {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
+  "components": {
+    "securitySchemes": {
+      "BearerAuthTokenUser": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     },
-    "schemas" : {
-      "Users" : {
-        "required" : [ "name", "email", "password"],
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "example" : "John Doe"
+    "schemas": {
+      "Users": {
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
           },
-          "email" : {
-            "type" : "string",
-            "example" : "john@doe.com"
+          "email": {
+            "type": "string",
+            "example": "john@doe.com"
           },
-          "password" : {
-            "type" : "string",
-            "example" : "21374d4"
+          "password": {
+            "type": "string",
+            "example": "21374d4"
           }
         }
-      },"Login" : {
-        "required" : [ "name", "email"],
-        "type" : "object",
-        "properties" : {
-          "email" : {
-            "type" : "string",
-            "example" : "john@doe.com"
+      },
+      "Login": {
+        "required": [
+          "name",
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john@doe.com"
           },
-          "password" : {
-            "type" : "string",
-            "example" : "21374d4"
+          "password": {
+            "type": "string",
+            "example": "21374d4"
           }
         }
-      },"Games" : {
-        "required" : [ "user", "rows", "cols", "bombs"],
-        "type" : "object",
-        "properties" : {
-          "user" : {
-            "type" : "string",
-            "example" : "5f3bd6c6f2e04441790d8e27"
+      },
+      "Games": {
+        "required": [
+          "user",
+          "rows",
+          "cols",
+          "bombs"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "5f3bd6c6f2e04441790d8e27"
           },
-          "rows" : {
-            "type" : "integer",
-            "example" : "20"
+          "rows": {
+            "type": "integer",
+            "example": "20"
           },
-          "cols" : {
-            "type" : "integer",
-            "example" : "20"
+          "cols": {
+            "type": "integer",
+            "example": "20"
           },
-          "bombs" : {
-            "type" : "integer",
-            "example" : "5"
+          "bombs": {
+            "type": "integer",
+            "example": "5"
           }
         }
-      },"SaveGame": {
+      },
+      "SaveGame": {
         "required": [
           "playedMap",
           "timer"
@@ -237,7 +301,10 @@
         "properties": {
           "playedMap": {
             "type": "array",
-            "example": "[{clicked: true}, {value: '*'}"
+            "example": "[{clicked: true}, {value: '*'}",
+            "items": {
+              "type": "string"
+            }
           },
           "timer": {
             "type": "integer",

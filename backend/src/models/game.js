@@ -21,7 +21,7 @@ const gameSchema = new mongoose.Schema({
     },
     timer: {
         type: Number,
-        required: true
+        default: 60
     },
     map: {
         type: Array,
@@ -33,7 +33,7 @@ const gameSchema = new mongoose.Schema({
     },
     cellsClicked: {
         type: Number,
-        required: true
+	default: 1
     },
     state: {
         type: String,

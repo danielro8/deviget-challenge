@@ -73,7 +73,7 @@ const Map = () => {
         updateGameState()
     }
     return (
-        <div className="container" style={{ overflowX: "auto", overflowY: "hidden" }}>
+        <div className="container" style={{ paddingLeft: "0", overflowX: "auto", overflowY: "hidden" }}>
             <table className="map">
                 {!gameover && <caption className="timer">{curTimer}{restartBtn()} <button className="btn btn-primary" onClick={handleSaveClick}>Save</button></caption>}
                 {gameover && win && <caption className="win">YOU HAVE WON!!!  {restartBtn()}</caption>}
